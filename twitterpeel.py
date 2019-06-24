@@ -41,8 +41,14 @@ def get_tweets(user, pages=20):
 
             comma = ','
             dot = '.'
+
+            tweets_src = soup.find_all(class_='stream-item')
+            if not tweets_src:
+                # No more tweets
+                break
+
             tweets = []
-            for tweet in soup.find_all(class_='stream-item'):
+            for tweet in tweets_src:
                 text = tweet.find(class_='tweet-text').text
 
                 tweet_id = tweet['data-item-id']
@@ -97,7 +103,7 @@ def get_tweets(user, pages=20):
                     }
                 })
 
-            last_tweetid = tweets[-1]['tweetid']
+                last_tweetid = tweets[-1]['tweetid']
 
             for tweet in tweets:
                 if tweet:
